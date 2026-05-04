@@ -1,0 +1,13 @@
+# Build outputs
+esp32/.pio/
+web/build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Planning/spec docs (local reference only)
+docs/superpowers/
