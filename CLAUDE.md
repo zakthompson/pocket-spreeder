@@ -4,7 +4,7 @@ A **tiny** ESP32-based RSVP (rapid serial visual presentation) e-reader. Uses OR
 
 ## Prototype Hardware
 
-We have a **[LILYGO T-DisplayS3 AMOLED V2.0](https://lilygo.cc/en-ca/products/t-display-s3-amoled?variant=43506902368437)** that we're using for prototyping. We also have a generic rotary encoder which will be used for controls.
+We have a **[LILYGO T-DisplayS3 AMOLED V2.0](https://lilygo.cc/en-ca/products/t-display-s3-amoled?variant=43506902368437)** that we're using for prototyping. The display is **held in landscape orientation** (536×240 pixels). We also have a generic rotary encoder which will be used for controls.
 
 ## Development Environment
 

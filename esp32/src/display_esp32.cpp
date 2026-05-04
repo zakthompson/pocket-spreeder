@@ -4,8 +4,8 @@ void DisplayESP32::init() {
     // TODO: initialize LovyanGFX with AMOLED panel config
 }
 
-int DisplayESP32::getWidth() const { return 240; }
-int DisplayESP32::getHeight() const { return 536; }
+int DisplayESP32::getWidth() const { return 536; }
+int DisplayESP32::getHeight() const { return 240; }
 
 int DisplayESP32::measureText(const char*, int) const {
     // TODO: use LovyanGFX textWidth()

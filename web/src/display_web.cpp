@@ -26,8 +26,8 @@ EM_JS(void, js_clear, (), {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
 
-int DisplayWeb::getWidth() const { return 240; }
-int DisplayWeb::getHeight() const { return 536; }
+int DisplayWeb::getWidth() const { return 536; }
+int DisplayWeb::getHeight() const { return 240; }
 
 int DisplayWeb::measureText(const char* text, int len) const {
     return js_measure_text(text, len);

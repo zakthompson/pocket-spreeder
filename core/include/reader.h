@@ -13,7 +13,7 @@ struct ReaderConfig {
     static constexpr int MIN_WPM = 200;
     static constexpr int MAX_WPM = 600;
     static constexpr int WPM_STEP = 25;
-    static constexpr int ORP_ANCHOR_X = 105;
+    static constexpr int ORP_ANCHOR_X = 230;
     static constexpr uint32_t COLOR_WHITE = 0xFFFFFF;
     static constexpr uint32_t COLOR_RED = 0xFF0000;
 };
