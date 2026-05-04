@@ -21,6 +21,7 @@ private:
 
     void grow();
     void addToken(const char* raw, int rawLen);
+    void addParagraphBreak();
 };
 
 } // namespace core
