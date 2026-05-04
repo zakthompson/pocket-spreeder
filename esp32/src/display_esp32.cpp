@@ -7,6 +7,10 @@ void DisplayESP32::init() {
 int DisplayESP32::getWidth() const { return 536; }
 int DisplayESP32::getHeight() const { return 240; }
 
+void DisplayESP32::setFontSize(int) {
+    // TODO: use LovyanGFX setTextSize() / setFont()
+}
+
 int DisplayESP32::measureText(const char*, int) const {
     // TODO: use LovyanGFX textWidth()
     return 0;

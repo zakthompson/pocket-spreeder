@@ -11,6 +11,7 @@ public:
     virtual ~Display() = default;
     virtual int getWidth() const = 0;
     virtual int getHeight() const = 0;
+    virtual void setFontSize(int size) = 0;
     virtual int measureText(const char* text, int len) const = 0;
     virtual void drawText(int x, int y, const char* text, int len, uint32_t color) = 0;
     virtual void clear() = 0;

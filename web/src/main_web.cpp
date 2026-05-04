@@ -32,43 +32,6 @@ static const char* sampleText =
     "thirty-nine and had a varicose ulcer above his right ankle, went slowly, "
     "resting several times on the way.";
 
-EM_JS(void, js_begin_font_sizing, (), {
-    var canvas = document.getElementById('display');
-    var ctx = canvas.getContext('2d');
-    Module._fontSizeRef = 100;
-    ctx.font = Module._fontSizeRef + 'px system-ui, -apple-system, sans-serif';
-    Module._worstScale = Infinity;
-});
-
-EM_JS(void, js_measure_token_for_sizing, (const char* raw, int rawLen, int rawOrpIndex), {
-    var canvas = document.getElementById('display');
-    var ctx = canvas.getContext('2d');
-    var str = UTF8ToString(raw, rawLen);
-    var left = str.substring(0, rawOrpIndex);
-    var right = str.substring(rawOrpIndex);
-    var orpAnchorX = 230;
-    var availLeft = orpAnchorX - 10;
-    var availRight = canvas.width - orpAnchorX - 10;
-    var scale = Infinity;
-    if (left.length > 0) {
-        var leftWidth = ctx.measureText(left).width;
-        if (leftWidth > 0) scale = Math.min(scale, availLeft / leftWidth);
-    }
-    if (right.length > 0) {
-        var rightWidth = ctx.measureText(right).width;
-        if (rightWidth > 0) scale = Math.min(scale, availRight / rightWidth);
-    }
-    if (scale < Module._worstScale) Module._worstScale = scale;
-});
-
-EM_JS(void, js_apply_font_size, (), {
-    var canvas = document.getElementById('display');
-    var ctx = canvas.getContext('2d');
-    var fontSize = Math.floor(Module._fontSizeRef * Module._worstScale);
-    ctx.font = fontSize + 'px system-ui, -apple-system, sans-serif';
-    ctx.textBaseline = 'middle';
-});
-
 EM_JS(void, js_update_status, (int wpm, int state), {
     document.getElementById('wpm').textContent = wpm;
     var stateStr = state === 0 ? 'Paused' : state === 1 ? 'Reading' : 'Paragraph';
@@ -88,17 +51,7 @@ int main() {
     tokenizer.tokenize(sampleText, std::strlen(sampleText));
     reader.loadTokens(tokenizer.getTokens(), tokenizer.getTokenCount());
 
-    const core::Token* tokens = tokenizer.getTokens();
-    int count = tokenizer.getTokenCount();
-    js_begin_font_sizing();
-    for (int i = 0; i < count; i++) {
-        if (!tokens[i].isParagraphBreak && tokens[i].rawLen > 0) {
-            int leadingOffset = static_cast<int>(tokens[i].clean - tokens[i].raw);
-            int rawOrpIndex = tokens[i].orpIndex + leadingOffset;
-            js_measure_token_for_sizing(tokens[i].raw, tokens[i].rawLen, rawOrpIndex);
-        }
-    }
-    js_apply_font_size();
+    reader.fitFontToTokens();
 
     emscripten_set_main_loop(tick, 0, 1);
     return 0;

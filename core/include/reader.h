@@ -31,6 +31,7 @@ public:
     Reader(hal::Display& display, hal::Input& input, hal::Storage& storage);
 
     void loadTokens(const Token* tokens, int count);
+    void fitFontToTokens();
     void restoreState();
     void tick(unsigned long deltaMicros);
 

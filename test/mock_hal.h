@@ -21,8 +21,12 @@ public:
     };
     DrawCall draws[32];
 
+    int fontSize = 24;
+
     int getWidth() const override { return width; }
     int getHeight() const override { return height; }
+
+    void setFontSize(int size) override { fontSize = size; }
 
     int measureText(const char*, int len) const override {
         return len * charWidth;

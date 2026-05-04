@@ -24,6 +24,48 @@ void Reader::loadTokens(const Token* tokens, int count) {
     dirty_ = true;
 }
 
+void Reader::fitFontToTokens() {
+    if (!tokens_ || tokenCount_ == 0) return;
+
+    static constexpr int REF_SIZE = 100;
+    static constexpr int MARGIN = 10;
+    display_.setFontSize(REF_SIZE);
+
+    int availLeft = ReaderConfig::ORP_ANCHOR_X - MARGIN;
+    int availRight = display_.getWidth() - ReaderConfig::ORP_ANCHOR_X - MARGIN;
+    int worstNumerator = availRight;
+    int worstDenominator = 1;
+
+    for (int i = 0; i < tokenCount_; i++) {
+        const Token& tok = tokens_[i];
+        if (tok.isParagraphBreak || tok.rawLen <= 0) continue;
+
+        int leadingOffset = static_cast<int>(tok.clean - tok.raw);
+        int rawOrpIndex = tok.orpIndex + leadingOffset;
+
+        if (rawOrpIndex > 0) {
+            int leftWidth = display_.measureText(tok.raw, rawOrpIndex);
+            if (leftWidth > 0 && availLeft * worstDenominator < leftWidth * worstNumerator) {
+                worstNumerator = availLeft;
+                worstDenominator = leftWidth;
+            }
+        }
+
+        int rightLen = tok.rawLen - rawOrpIndex;
+        if (rightLen > 0) {
+            int rightWidth = display_.measureText(tok.raw + rawOrpIndex, rightLen);
+            if (rightWidth > 0 && availRight * worstDenominator < rightWidth * worstNumerator) {
+                worstNumerator = availRight;
+                worstDenominator = rightWidth;
+            }
+        }
+    }
+
+    int fontSize = REF_SIZE * worstNumerator / worstDenominator;
+    if (fontSize < 1) fontSize = 1;
+    display_.setFontSize(fontSize);
+}
+
 void Reader::restoreState() {
     ReaderSaveData data;
     if (storage_.load("reader", &data, sizeof(data))) {
