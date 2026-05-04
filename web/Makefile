@@ -13,7 +13,8 @@ WEB_SRCS = src/display_web.cpp \
 
 LDFLAGS = -sWASM=1 \
           -sALLOW_MEMORY_GROWTH=1 \
-          -sEXPORTED_RUNTIME_METHODS='["UTF8ToString"]' \
+          -sEXPORTED_FUNCTIONS='["_main","_setReaderText"]' \
+          -sEXPORTED_RUNTIME_METHODS='["UTF8ToString","ccall","lengthBytesUTF8"]' \
           --shell-file shell_template.html
 
 all: build/index.html
