@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pocket Spreeder — Simulator</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        background: #1a1a1a;
+        color: #ccc;
+        font-family: system-ui, -apple-system, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .simulator {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+    }
+    .display-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    #display {
+        border: 2px solid #333;
+        border-radius: 4px;
+        image-rendering: pixelated;
+        width: 480px;
+        height: 1072px;
+    }
+    .status {
+        font-size: 14px;
+        color: #888;
+        text-align: center;
+    }
+    .status span { color: #ccc; }
+    .encoder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    .encoder-label {
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .knob-container {
+        width: 80px;
+        height: 80px;
+        position: relative;
+    }
+    .knob {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #555, #2a2a2a);
+        border: 2px solid #444;
+        position: relative;
+        transition: transform 0.1s ease-out;
+    }
+    .knob.pressed {
+        background: radial-gradient(circle at 35% 35%, #666, #333);
+        border-color: #888;
+    }
+    .knob-notch {
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 12px;
+        background: #888;
+        border-radius: 2px;
+    }
+    .encoder-hint {
+        font-size: 11px;
+        color: #555;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div class="simulator">
+    <div class="display-wrapper">
+        <canvas id="display" width="240" height="536"></canvas>
+        <div class="status">
+            <span id="wpm">300</span> WPM &nbsp;|&nbsp;
+            <span id="state">Paused</span>
+        </div>
+    </div>
+    <div class="encoder">
+        <div class="encoder-label">Encoder</div>
+        <div class="knob-container">
+            <div class="knob" id="knob">
+                <div class="knob-notch"></div>
+            </div>
+        </div>
+        <div class="encoder-hint">
+            ↑↓ or scroll: rotate<br>
+            space: press
+        </div>
+    </div>
+</div>
+
+<script>
+    var Module = {
+        canvas: document.getElementById('display'),
+        onRuntimeInitialized: function() {
+            console.log('Pocket Spreeder WASM loaded');
+            var ctx = document.getElementById('display').getContext('2d');
+            ctx.font = '24px system-ui, -apple-system, sans-serif';
+            ctx.textBaseline = 'middle';
+        }
+    };
+</script>
+{{{ SCRIPT }}}
+<script src="shell.js"></script>
+</body>
+</html>
