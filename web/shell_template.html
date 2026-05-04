@@ -10,9 +10,10 @@
         color: #ccc;
         font-family: system-ui, -apple-system, sans-serif;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         min-height: 100vh;
+        padding: 40px 0;
     }
     .simulator {
         display: flex;
@@ -83,6 +84,65 @@
         color: #555;
         text-align: center;
     }
+    .text-loader {
+        display: flex;
+        gap: 16px;
+        margin-top: 32px;
+        width: 1072px;
+    }
+    .drop-zone {
+        flex: 1;
+        border: 2px dashed #444;
+        border-radius: 8px;
+        padding: 24px;
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 120px;
+    }
+    .drop-zone.drag-over {
+        border-color: #888;
+        color: #ccc;
+        background: rgba(255,255,255,0.03);
+    }
+    .drop-zone input[type="file"] { display: none; }
+    .text-input-area {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .text-input-area textarea {
+        background: #222;
+        color: #ccc;
+        border: 2px solid #444;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 14px;
+        resize: vertical;
+        min-height: 120px;
+        outline: none;
+    }
+    .text-input-area textarea:focus { border-color: #666; }
+    .text-input-area button {
+        align-self: flex-end;
+        background: #333;
+        color: #ccc;
+        border: 1px solid #555;
+        border-radius: 6px;
+        padding: 8px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+    .text-input-area button:hover { background: #444; }
 </style>
 </head>
 <body>
@@ -105,6 +165,16 @@
             ↑↓ or scroll: rotate<br>
             space: press
         </div>
+    </div>
+</div>
+<div class="text-loader">
+    <div class="drop-zone" id="drop-zone">
+        <span>Drop a .txt file here<br>or click to browse</span>
+        <input type="file" id="file-input" accept=".txt,text/plain">
+    </div>
+    <div class="text-input-area">
+        <textarea id="text-input" placeholder="Or paste / type text here..."></textarea>
+        <button id="load-text-btn">Load Text</button>
     </div>
 </div>
 

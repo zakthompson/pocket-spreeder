@@ -1,5 +1,6 @@
 #include <emscripten.h>
 #include <cstring>
+#include <cstdlib>
 #include "reader.h"
 #include "tokenizer.h"
 #include "display_web.h"
@@ -13,6 +14,8 @@ static core::Reader reader(display, input, storage);
 static core::Tokenizer tokenizer;
 
 static unsigned long lastTime = 0;
+
+static char* textBuffer = nullptr;
 
 static const char* sampleText =
     "It was a bright cold day in April, and the clocks were striking thirteen. "
@@ -32,6 +35,21 @@ static const char* sampleText =
     "thirty-nine and had a varicose ulcer above his right ankle, went slowly, "
     "resting several times on the way.";
 
+static void loadText(const char* text, int len) {
+    free(textBuffer);
+    textBuffer = static_cast<char*>(malloc(len));
+    std::memcpy(textBuffer, text, len);
+    tokenizer.tokenize(textBuffer, len);
+    reader.loadTokens(tokenizer.getTokens(), tokenizer.getTokenCount());
+    reader.fitFontToTokens();
+}
+
+extern "C" {
+    void setReaderText(const char* text, int len) {
+        loadText(text, len);
+    }
+}
+
 EM_JS(void, js_update_status, (int wpm, int state), {
     document.getElementById('wpm').textContent = wpm;
     var stateStr = state === 0 ? 'Paused' : state === 1 ? 'Reading' : 'Paragraph';
@@ -48,11 +66,7 @@ void tick() {
 }
 
 int main() {
-    tokenizer.tokenize(sampleText, std::strlen(sampleText));
-    reader.loadTokens(tokenizer.getTokens(), tokenizer.getTokenCount());
-
-    reader.fitFontToTokens();
-
+    loadText(sampleText, std::strlen(sampleText));
     emscripten_set_main_loop(tick, 0, 1);
     return 0;
 }
