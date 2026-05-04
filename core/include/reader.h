@@ -22,7 +22,6 @@ struct ReaderConfig {
     static constexpr uint32_t COLOR_WHITE = 0xFFFFFF;
     static constexpr uint32_t COLOR_RED = 0xFF0000;
     static constexpr uint32_t COLOR_RETICLE = 0x444444;
-    static constexpr int RETICLE_HEIGHT = 6;
     static constexpr int RETICLE_OFFSET_ABOVE = 20;
     static constexpr int RETICLE_OFFSET_BELOW = 14;
 };

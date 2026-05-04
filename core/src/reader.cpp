@@ -76,7 +76,14 @@ void Reader::handleInput() {
 
     if (delta != 0) {
         if (state_ == ReaderState::PAUSED) {
-            int target = findNextDisplayable(tokenIndex_, delta > 0 ? 1 : -1);
+            int steps = delta > 0 ? delta : -delta;
+            int direction = delta > 0 ? 1 : -1;
+            int target = tokenIndex_;
+            for (int i = 0; i < steps; i++) {
+                int next = findNextDisplayable(target, direction);
+                if (next == target) break;
+                target = next;
+            }
             if (target != tokenIndex_) {
                 tokenIndex_ = target;
                 dirty_ = true;
