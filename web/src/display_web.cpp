@@ -26,8 +26,19 @@ EM_JS(void, js_clear, (), {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
 
+EM_JS(void, js_set_font_size, (int size), {
+    var canvas = document.getElementById('display');
+    var ctx = canvas.getContext('2d');
+    ctx.font = size + 'px system-ui, -apple-system, sans-serif';
+    ctx.textBaseline = 'middle';
+});
+
 int DisplayWeb::getWidth() const { return 536; }
 int DisplayWeb::getHeight() const { return 240; }
+
+void DisplayWeb::setFontSize(int size) {
+    js_set_font_size(size);
+}
 
 int DisplayWeb::measureText(const char* text, int len) const {
     return js_measure_text(text, len);

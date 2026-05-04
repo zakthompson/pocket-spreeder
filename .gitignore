@@ -12,3 +12,5 @@ web/build/
 # Planning/spec docs (local reference only)
 docs/superpowers/
 test/test_orp
+test/test_tokenizer
+test/test_reader
