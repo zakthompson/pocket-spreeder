@@ -119,8 +119,8 @@ The key insight for RSVP: instead of centering the word on screen, you pin the O
 | 2–3 letters   | 1st                    | Short words recognized as a unit from the start                        |
 | 4–5 letters   | 2nd                    | First internal letter; left of center                                  |
 | 6–9 letters   | 3rd                    | Standard offset for common word lengths                                |
-| 10–13 letters | 4th                    | Longer words shift anchor right but still left of center               |
-| 14+ letters   | 5th                    | Very long words; anchor stabilizes at 5th regardless of further length |
+| 10–12 letters | 4th                    | Longer words shift anchor right but still left of center               |
+| 13+ letters   | 5th                    | Very long words; anchor stabilizes at 5th regardless of further length |
 
 ---
 
@@ -302,7 +302,7 @@ Before calling the engine done, run every word in this list through your ORP cal
 "(quietly),"  → strip to "quietly", ORP index 2, display "(quietly),"
 "don't,"      → strip to "don't", ORP index 1, display "don't,"
 "well-known"  → ORP index 2 on "well-known", letter "l"
-"$47.50"      → ORP index 2 on "$47.50", letter "4"
+"$47.50"      → ORP index 2 on "$47.50", letter "7"
 ```
 
 Get all of these right and you'll get everything else right.
